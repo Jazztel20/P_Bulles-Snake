@@ -7,6 +7,7 @@ import { drawScore } from "./score.js";
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
+// Variables globales
 const box = 20;
 const gameSpeed = 200;
 let snake;
@@ -27,7 +28,8 @@ function startGame() {
 }
 
 function draw() {
-  // A compléter
+  canvas.innerHTML = ""; // Clear the canvas
+  drawSnake();
 }
 
 startGame();
