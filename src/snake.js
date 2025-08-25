@@ -7,7 +7,7 @@
  * @returns {Array<{x: number, y: number}>} - Un tableau contenant un objet représentant la position du premier segment du serpent.
  */
 function initSnake() {
-  // A compléter
+  let snake = [{ x: 10, y: 10}];
 }
 
 /**
@@ -38,6 +38,28 @@ function moveSnake() {
  * @param {Array<{x: number, y: number}>} snake - Un tableau représentant le serpent, où chaque élément est un segment avec des coordonnées `x` et `y`.
  * @param {number} box - La taille d'une case de la grille en pixels, utilisée pour déterminer la taille de chaque segment du serpent.
  */
+
+// Draw the snake on the canvas
 function drawSnake() {
-  // A compléter
+  snake.forEach((segment) => {
+    const snakeElement = createGameElement('div', 'snake');
+    setPosition(snakeElement, segment.x, segment.y);
+    board.appendChild(snakeElement);
+})
 }
+
+// Create a snake or food cube/div
+function createGameElement(tag, className) {
+  const element = document.createElement(tag);
+  element.className = className;
+  return element;
+}
+
+// Set the position of the snake or food cube/div
+function setPosition(element, position){
+  element.style.gridColumn = position.x;
+  element.style.gridRow = position.y;
+}
+
+// Testing draw function
+drawSnake();
