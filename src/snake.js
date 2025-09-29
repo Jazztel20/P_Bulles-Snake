@@ -7,7 +7,8 @@
  * @returns {Array<{x: number, y: number}>} - Un tableau contenant un objet représentant la position du premier segment du serpent.
  */
 function initSnake() {
-  // A compléter
+  // Position de départ du serpent (au centre du canvas)
+  return [{ x:200, y :200 }];
 }
 
 /**
