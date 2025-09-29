@@ -23,7 +23,7 @@ export function initSnake() {
  * @param {number} box - La taille d'une case de la grille en pixels, utilisée pour déterminer la distance de déplacement du serpent.
  * @returns {{x: number, y: number}} - Un objet représentant les nouvelles coordonnées `x` et `y` de la tête du serpent après le déplacement.
  */
-function moveSnake(snake, direction, box) {
+export function moveSnake(snake, direction, box) {
  // Récupère la position actuelle du serpent (au début du tableau)
  const head = snake[0];
 
@@ -56,8 +56,14 @@ function moveSnake(snake, direction, box) {
  * @param {number} box - La taille d'une case de la grille en pixels, utilisée pour déterminer la taille de chaque segment du serpent.
  */
 
-// Draw the snake on the canvas
-function drawSnake() {
-  // A compléter
+export function drawSnake(ctx, snake, box) {
+
+  // Boucle sur chaque segment : index 0 = tête, le reste = corps.
+  for (let i =0; i < snake.length; i++) {
+    // Couleur : tête plus foncée pour la distinguer visuellement.
+    ctx.fillStyle = i === 0 ? "#10b981" : "#34d399"; // Couleur différente pour la tête
+    // Dessine un carré plein (un segment du serpent) sur le canevas.
+    ctx.fillRect(snake[i].x, snake[i].y, box, box);
+  }
 }
 
