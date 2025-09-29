@@ -31,36 +31,42 @@ function draw() {
  // Nettoyer le canevas
  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
- // 1) calculer la nouvelle tête à partir de l'état courant
- const newHead = moveSnake(snake, direction, box);
+// Dessine la nourriture et le servent actuels
+  drawFood(ctx,food, box);
+  drawSnake(ctx, snake, box);
+  drawScore(ctx, score);
 
-  // 2) vérifier les collisions
-  if (checkWallCollision(newHead, canvas) || checkCollision(newHead, snake)) {
-    clearInterval(gameInterval); // Arrêter le jeu en supprimant l'intervalle
-    alert("Game Over! Votre score: " + score);
+  // Caclule la prochaine tête du serpent
+  const nextHead = moveSnake(snake, direction, box);
+  
+  // Collisions
+  if (checkWallCollision(nextHead, canvas, box) || checkCollision(nextHead, snake)) {
+
+    // Game Over
+    clearInterval(gameInterval);
+
+    // Affichage d'un message simple
+    ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+    ctx.fillRect(0, canvas.height / 2 - 30, canvas.width, 60);
+    ctx.fillStyle = "#fff";
+    ctx.font = "24px Arial"
+    ctx.textAlign = "middle";
+    ctx.fillText("Game Over! Score: " + score, canvas.width / 2, canvas.height / 2 + 10 + "- F5 pour rejouer");
     return;
   }
 
-  // 3) Avancer (ajouter la tête)
-  snake.unshift(newHead);
+  // Manger
+  const ate = nextHead.x === food.x && nextHead.y === food.y;
 
-  // 4) Manger la nourriture
-  const ateFood = newHead.x === food.x && newHead.y === food.y;
-  if (ateFood) {
-    score +=1;
+  // Ajoute la nouvelle tête 
+  snake.unshift(nextHead);
 
-    // Générer la nourriture sur une case libre
-    do {
-      food = generateFood(box, canvas);
-    } while (checkCollision(seg => seg.x === food.x && seg.y === food.y,));
-  }else{
-    // Pas mangé -> retirer la queue 
-    snake.pop()
+  if(ate){
+    score += 1;
+    food = generateFood(box, canvas);
+    // pas de pop -> le serpent grandit
+  } else {
+    snake.pop(); // Enlève la queue pour se déplacer
   }
-
-  // 5) Dessiner
-  drawSnake(ctx, snake, box);
-  drawFood(ctx, food, box);
-  drawScore(ctx, score);
 }
 startGame();
