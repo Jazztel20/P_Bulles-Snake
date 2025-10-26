@@ -10,21 +10,27 @@
  * @param {string} currentDirection - La direction actuelle du serpent (peut être "UP", "DOWN", "LEFT", ou "RIGHT").
  * @returns {string} - La nouvelle direction du serpent après traitement, ou la direction actuelle si le changement n'est pas valide.
  */
-function handleDirectionChange(event, currentDirection) {
+export function handleDirectionChange(event, currentDirection) {
+  // récupère la touche pressée (ex: "ArrowLeft")
   const key = event.key;
   switch (key) {
     case "ArrowLeft":
+      // Interdit le demi-tour immédiat (droite -> gauche)
       if (currentDirection !== "RIGHT") return "LEFT";
       break;
     case "ArrowUp":
+      // Interdit le demi-tour immédiat (bas -> haut)
       if (currentDirection !== "DOWN") return "UP";
       break;
     case "ArrowRight":
+      // Interdit le demi-tour immédiat (gauche -> droite)
       if (currentDirection !== "LEFT") return "RIGHT";
       break;
     case "ArrowDown":
+      // Interdit le demi-tour immédiat (haut -> bas)
       if (currentDirection !== "UP") return "DOWN";
       break;  
   }
+  // si la touche ne change pas la direction, on conserve l'actuelle
   return currentDirection;
 }
