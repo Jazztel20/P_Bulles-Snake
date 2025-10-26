@@ -56,8 +56,9 @@ function draw() {
     ctx.fillRect(0, canvas.height / 2 - 30, canvas.width, 60);
     ctx.fillStyle = "#fff";
     ctx.font = "24px Arial"
-    ctx.textAlign = "middle";
-    ctx.fillText("Game Over! Score: " + score, canvas.width / 2, canvas.height / 2 + 10 + "- F5 pour rejouer");
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(`Game Over! Score: ${score} - F5 pour rejouer`, canvas.width / 2, canvas.height / 2);
     return;
   }
 
