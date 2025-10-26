@@ -9,6 +9,9 @@ import { drawScore } from "./score.js";
 const canvas = document.getElementById("gameCanvas");
 // Récupère le contexte de dessin en 2D pour pouvoir tracer des formes sur le canvas
 const ctx = canvas.getContext("2d");
+// Affichage du score dans le DOM (au-dessus du canvas)
+const scoreDisplay = document.getElementById("scoreDisplay"); 
+
 
 // Variables globales
 const box = 20;           // Taille d'une case de la grille (en pixels)
@@ -40,7 +43,9 @@ function draw() {
   // Dessine la nourriture, le serpent et le score
   drawFood(ctx,food, box);
   drawSnake(ctx, snake, box);
-  drawScore(ctx, score);
+  // On affiche le score à l'extérieur du canvas
+  scoreDisplay.textContent = `Score: ${score}`;
+
 
   // Calcule la position de la prochaine tête du serpent
   const nextHead = moveSnake(snake, direction, box);
@@ -58,7 +63,11 @@ function draw() {
     ctx.font = "24px Arial"
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText(`Game Over! Score: ${score} - F5 pour rejouer`, canvas.width / 2, canvas.height / 2);
+    // Première ligne : "Game Over!"
+    ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 15);
+
+    // Deuxième ligne : score + message de relance
+    ctx.fillText(`Score: ${score} - F5 pour rejouer`, canvas.width / 2, canvas.height / 2 + 15);
     return;
   }
 
