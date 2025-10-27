@@ -15,7 +15,7 @@ const scoreDisplay = document.getElementById("scoreDisplay");
 
 // Variables globales
 const box = 20;           // Taille d'une case de la grille (en pixels)
-const gameSpeed = 200;    // Vitesse du jeu (en millisecondes entre chaque frame)
+const gameSpeed = 150;    // Vitesse du jeu (en millisecondes entre chaque frame)
 let snake;                // Tableau représentant le serpent
 let food;                 // Objet représentant la nourriture
 let direction = "RIGHT";  // Direction de départ du serpent
