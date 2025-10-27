@@ -21,6 +21,7 @@ let food;                 // Objet représentant la nourriture
 let direction = "RIGHT";  // Direction de départ du serpent
 let score = 0;            // Score du joueur
 let gameInterval;         // Variable pour stocker l'identifiant de l'intervalle
+let startTime;            // Variable pour stocker le temps de début du jeu  
 
 // Détecte lorsqu'une touche est pressée et met à jour la direction du serpent
 document.addEventListener("keydown", (event) => {
@@ -32,6 +33,8 @@ function startGame() {
   snake = initSnake();
   food = generateFood(box, canvas);
 
+  // Démarre le chronomètre au lancement du jeu
+  startTime = Date.now();
   // Lance la boucle principale du jeu à intervalles réguliers
   gameInterval = setInterval(draw, gameSpeed); // Stockage de l'identifiant de l'intervalle
 }
@@ -56,18 +59,41 @@ function draw() {
     // Arrête la boucle du jeu
     clearInterval(gameInterval);
 
-    // Affiche un message "Game Over" au centre de l’écran
-    ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-    ctx.fillRect(0, canvas.height / 2 - 30, canvas.width, 60);
-    ctx.fillStyle = "#fff";
-    ctx.font = "24px Arial"
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    // Première ligne : "Game Over!"
-    ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 15);
+  // Texte à afficher à la fin du jeu
+  // Texte à afficher à la fin du jeu
+  const elapsedTime = Math.floor((Date.now() - startTime) / 1000); // Temps écoulé en secondes
+  const gameOverLines = [
+    "Game Over!",
+    `Ton score: ${score}`,
+    `Temps écoulé: ${elapsedTime} sec`,
+    "Appuie sur F5 pour rejouer"
+  ];
 
-    // Deuxième ligne : score + message de relance
-    ctx.fillText(`Score: ${score} - F5 pour rejouer`, canvas.width / 2, canvas.height / 2 + 15);
+  // Paramètres de style
+  ctx.font = "24px Arial";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  // Calcul dynamique de la hauteur totale du texte
+  const lineHeight = 30; // Espacement entre les lignes
+  const totalHeight = gameOverLines.length * lineHeight;
+
+  // Position du centre de l'écran
+  const centerY = canvas.height / 2;
+
+  // Calcul du point de départ pour centrer verticalement les lignes
+  const startY = centerY - totalHeight / 2;
+
+  // Dessine un fond noir légèrement plus grand que le texte
+  ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+  ctx.fillRect(0, startY - 20, canvas.width, totalHeight + 40);
+
+  // Affiche chaque ligne centrée verticalement et horizontalement
+  ctx.fillStyle = "#fff";
+  gameOverLines.forEach((line, index) => {
+    const y = startY + index * lineHeight + lineHeight / 2; // Décalage pour un centrage parfait
+    ctx.fillText(line, canvas.width / 2, y);
+  });
     return;
   }
 
